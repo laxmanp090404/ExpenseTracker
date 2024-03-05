@@ -39,6 +39,15 @@ async function connectToDb() {
 }
 //function call
 connectToDb();
+//error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({
+      status: 'error',
+      message: 'Internal Server Error',
+      error: err.message,
+  });
+});
 //add expense api
 app.post("/add-expense", async (req, res) => {
   //res should be send as successful or failure
